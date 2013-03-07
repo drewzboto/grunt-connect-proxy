@@ -82,7 +82,7 @@ For the server task, add the configureProxies task before the connect task
 
 
 ### Options
-The available configuration options from a given proxy are generally the same as what is provided by the underlying [http-proxy|https://github.com/nodejitsu/node-http-proxy] library
+The available configuration options from a given proxy are generally the same as what is provided by the underlying [httpproxy](https://github.com/nodejitsu/node-http-proxy) library
 
 #### options.context
 Type: `String`
