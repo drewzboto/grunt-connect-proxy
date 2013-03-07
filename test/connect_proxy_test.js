@@ -55,5 +55,17 @@ exports.connect_proxy = {
     test.equal(proxies[1].config.changeOrigin, true, 'should have change origin set from config');
 
     test.done();
+  },
+
+  invalid_configs: function(test) {
+    test.expect(5);
+    var proxies = utils.proxies();
+
+    test.equal(proxies.length, 2, 'should not add the 2 invalid proxies');
+    test.notEqual(proxies[0].config.context, '/missinghost', 'should not have context set from config with missing host');
+    test.notEqual(proxies[0].config.host, 'www.missingcontext.com', 'should not have host set from config with missing context');
+    test.notEqual(proxies[1].config.context, '/missinghost', 'should not have context set from config with missing host');
+    test.notEqual(proxies[1].config.host, 'www.missingcontext.com', 'should not have host set from config with missing context');
+    test.done();
   }
 };

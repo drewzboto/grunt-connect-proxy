@@ -39,17 +39,23 @@ module.exports = function(grunt) {
       },
       proxies:
       [
-          {
+            {
               context: '/defaults',
               host: 'www.defaults.com'
-          },
-           {
+            },
+            {
               context: '/full',
               host: 'www.full.com',
               port: 8080,
               https: true,
               changeOrigin: true
-          },
+            },
+            {
+              context: '/missinghost'
+            },
+            {
+              host: 'www.missingcontext.com',
+            }
       ]
     },
 
