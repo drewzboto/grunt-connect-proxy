@@ -26,7 +26,10 @@ module.exports = function(grunt) {
             grunt.log.error('Proxy missing host or context configuration');
         } else {
             utils.registerProxy({
-              server: new httpProxy.HttpProxy({ target: proxyOption }),
+              server: new httpProxy.HttpProxy({ 
+                target: proxyOption,
+                changeOrigin: proxyOption.changeOrigin
+              }),
               config: proxyOption
             });
             grunt.log.writeln('Proxy created for: ' +  proxyOption.context);
