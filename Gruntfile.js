@@ -56,12 +56,33 @@ module.exports = function(grunt) {
             {
               host: 'www.missingcontext.com',
             }
-      ]
+      ],
+      server2: {
+        proxies: [
+          {
+            context: '/',
+            host: 'www.server2.com'
+          }
+        ]
+      },
+      server3: {
+        appendProxies: false,
+        proxies: [
+          {
+            context: '/server3',
+            host: 'www.server3.com',
+            port: 8080,
+            changeOrigin: true
+          }
+        ]
+      }
     },
 
     // Unit tests.
     nodeunit: {
-      tests: ['test/*_test.js'],
+      tests: ['test/connect_proxy_test.js'],
+      server2: 'test/server2_proxy_test.js',
+      server3: 'test/server3_proxy_test.js'
     },
 
   });
@@ -76,7 +97,23 @@ module.exports = function(grunt) {
 
   // Whenever the "test" task is run, first clean the "tmp" dir, then run this
   // plugin's task(s), then test the result.
-  grunt.registerTask('test', ['clean', 'configureProxies', 'nodeunit']);
+  grunt.registerTask('test', [
+    'clean', 
+    'configureProxies', 
+    'nodeunit:tests', 
+    'configureProxies:server2', 
+    'nodeunit:server2',
+    'configureProxies:server3', 
+    'nodeunit:server3',
+    ]);
+
+  // specifically test that option inheritance works for multi-level config
+  grunt.registerTask('test-inheritance', [
+    'clean', 
+    'configureProxies:server2', 
+    'nodeunit:server2',
+  ]);
+
 
   // By default, lint and run all tests.
   grunt.registerTask('default', ['jshint', 'test']);
