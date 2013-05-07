@@ -110,10 +110,60 @@ Whether to proxy with https
 Type: `Boolean`
 Default: false
 
-Whether to change the origin on the request to the proxy, or keep the original origin. 
+Whether to change the origin on the request to the proxy, or keep the original origin.
+
+#### options.appendProxies
+Type: `Boolean`
+Default: true
+
+Set to false to isolate multi-task configuration proxy options from parent level instead of appending them.
 
 ## Contributing
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
+
+#### Multi-server proxy configuration
+
+grunt-contrib-connect multi-server configuration is supported. You can define _proxies_ blocks in per-server options and refer to those blocks in task invocation.
+
+```js
+grunt.initConfig({
+    connect: {
+            options: {
+                port: 9000,
+                hostname: 'localhost'
+            },
+            server2: {
+                proxies: [
+                    {
+                        context: '/cortex',
+                        host: '10.10.2.202',
+                        port: 8080,
+                        https: false,
+                        changeOrigin: false
+                    }
+                ]
+            },
+            server3: {
+                appendProxies: false,
+                proxies: [
+                    {
+                        context: '/api',
+                        host: 'example.org'
+                    }
+                ]
+            }
+        }
+})
+
+grunt.registerTask('e2etest', function (target) {
+    grunt.task.run([
+        'configureProxies:server2',
+        'open',
+        'karma'
+    ]);
+});
+```
+
 
 ## Release History
 0.1.0 Initial release
