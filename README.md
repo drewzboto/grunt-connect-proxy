@@ -3,7 +3,7 @@
 > Provides an http proxy as middleware for the grunt-contrib-connect plugin. 
 
 ## Getting Started
-This plugin requires Grunt `~0.4.0`
+This plugin requires Grunt `~0.4.1`
 
 If you haven't used [Grunt](http://gruntjs.com/) before, be sure to check out the [Getting Started](http://gruntjs.com/getting-started) guide, as it explains how to create a [Gruntfile](http://gruntjs.com/sample-gruntfile) as well as install and use Grunt plugins. Once you're familiar with that process, you may install this plugin with this command:
 
@@ -167,3 +167,5 @@ grunt.registerTask('e2etest', function (target) {
 
 ## Release History
 0.1.0 Initial release
+0.1.1 Fix changeOrigin
+0.1.2 Support multiple server definitions, bumped to grunt 0.4.1
