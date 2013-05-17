@@ -28,7 +28,7 @@
     "test": "grunt test"
   },
   "dependencies": {
-    "http-proxy": "~0.8.7"
+    "http-proxy": "~0.10.2"
   },
   "devDependencies": {
     "grunt-contrib-jshint": "~0.1.1",
