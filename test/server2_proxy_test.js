@@ -9,12 +9,12 @@ exports.server2_proxy_test = {
     test.expect(9);
     var proxies = utils.proxies();
 
-    test.equal(proxies.length, 3, 'should return one valid proxy');
+    test.equal(proxies.length, 4, 'should return one valid proxy');
     test.notEqual(proxies[0].server, null, 'server should be configured');
     test.equal(proxies[0].config.context, '/defaults', 'should have context set from config');
     test.equal(proxies[0].config.host, 'www.defaults.com', 'should have host set from config');
-    test.equal(proxies[2].config.context, '/', 'should have context set from config');
-    test.equal(proxies[2].config.host, 'www.server2.com', 'should have host set from config');
+    test.equal(proxies[3].config.context, '/', 'should have context set from config');
+    test.equal(proxies[3].config.host, 'www.server2.com', 'should have host set from config');
     test.equal(proxies[0].config.port, 80, 'should have default port 80');
     test.equal(proxies[0].config.https, false, 'should have default http');
     test.equal(proxies[0].config.changeOrigin, false, 'should have default change origin');
