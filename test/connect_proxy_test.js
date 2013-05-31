@@ -32,7 +32,7 @@ exports.connect_proxy = {
     test.expect(7);
     var proxies = utils.proxies();
 
-    test.equal(proxies.length, 2, 'should return two valid proxies');
+    test.equal(proxies.length, 3, 'should return three valid proxies');
     test.notEqual(proxies[0].server, null, 'server should be configured');
     test.equal(proxies[0].config.context, '/defaults', 'should have context set from config');
     test.equal(proxies[0].config.host, 'www.defaults.com', 'should have host set from config');
@@ -46,7 +46,7 @@ exports.connect_proxy = {
     test.expect(7);
     var proxies = utils.proxies();
 
-    test.equal(proxies.length, 2, 'should return two valid proxies');
+    test.equal(proxies.length, 3, 'should return three valid proxies');
     test.notEqual(proxies[1].server, null, 'server should be configured');
     test.equal(proxies[1].config.context, '/full', 'should have context set from config');
     test.equal(proxies[1].config.host, 'www.full.com', 'should have host set from config');
@@ -61,7 +61,7 @@ exports.connect_proxy = {
     test.expect(5);
     var proxies = utils.proxies();
 
-    test.equal(proxies.length, 2, 'should not add the 2 invalid proxies');
+    test.equal(proxies.length, 3, 'should not add the 2 invalid proxies');
     test.notEqual(proxies[0].config.context, '/missinghost', 'should not have context set from config with missing host');
     test.notEqual(proxies[0].config.host, 'www.missingcontext.com', 'should not have host set from config with missing context');
     test.notEqual(proxies[1].config.context, '/missinghost', 'should not have context set from config with missing host');

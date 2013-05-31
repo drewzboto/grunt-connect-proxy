@@ -51,6 +51,11 @@ module.exports = function(grunt) {
               changeOrigin: true
             },
             {
+              context: '/notforwarded',
+              host: 'www.noforwardcontext.com',
+              rmForwardContext: true
+            },
+            {
               context: '/missinghost'
             },
             {
