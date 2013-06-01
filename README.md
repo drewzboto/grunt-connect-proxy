@@ -129,7 +129,8 @@ proxies: [
     host: 'host',
     port: 8080,
     rewrite: {
-        '^/context': ''
+        '^/removingcontext': '',
+        '^/changingcontext': '/anothercontext'
     }
 ]
 ```
@@ -184,5 +185,6 @@ grunt.registerTask('e2etest', function (target) {
 ## Release History
 * 0.1.0 Initial release
 * 0.1.1 Fix changeOrigin
-* 0.1.2 Support multiple server definitions, bumped to grunt 0.4.1
+* 0.1.2 Support multiple server definitions, bumped to grunt 0.4.1 (thanks to @lauripiispanen)
 * 0.1.3 Bumped http-proxy dependency to 0.10.2
+* 0.1.4 Added proxy rewrite support (thanks to @slawrence)
