@@ -48,7 +48,27 @@ module.exports = function(grunt) {
               host: 'www.full.com',
               port: 8080,
               https: true,
-              changeOrigin: true
+              changeOrigin: true,
+              rewrite: {
+                '^/full': '/anothercontext'
+              }
+            },
+            {
+              context: '/context/test',
+              host: 'www.anothercontext.com',
+              rewrite: {
+                '^/context': '/anothercontext',
+                'test': 'testing'
+              }
+            },
+            {
+              context: '/invalidrewrite',
+              host: 'www.invalidrewrite.com',
+              rewrite: {
+                '^/undefined': undefined,
+                '^/notstring': 13,
+                '^/in': '/thisis'
+              }
             },
             {
               context: '/missinghost'

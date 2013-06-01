@@ -30,11 +30,13 @@ module.exports = function(grunt) {
         proxyOption = _.defaults(proxy,  {
             port: 80,
             https: false,
-            changeOrigin: false
+            changeOrigin: false,
+            rules: []
         });
         if (_.isUndefined(proxyOption.host) || _.isUndefined(proxyOption.context)) {
             grunt.log.error('Proxy missing host or context configuration');
         } else {
+            proxyOption.rules = utils.processRewrites(proxyOption.rewrite, grunt.log);
             utils.registerProxy({
               server: new httpProxy.HttpProxy({ 
                 target: proxyOption,
