@@ -1,6 +1,6 @@
 # grunt-connect-proxy
 
-> Provides an http proxy as middleware for the grunt-contrib-connect plugin. 
+> Provides a http proxy as middleware for the grunt-contrib-connect plugin. 
 
 ## Getting Started
 This plugin requires Grunt `~0.4.1`
