@@ -112,6 +112,12 @@ Default: false
 
 Whether to change the origin on the request to the proxy, or keep the original origin.
 
+#### options.rejectUnauthorized: 
+Type: `Boolean`
+Default: false
+
+Whether to reject self-signed certificates when https: true is set. Defaults to accept self-signed certs since proxy is meant for development environments.
+
 #### options.appendProxies
 Type: `Boolean`
 Default: true
@@ -188,3 +194,4 @@ grunt.registerTask('e2etest', function (target) {
 * 0.1.2 Support multiple server definitions, bumped to grunt 0.4.1 (thanks to @lauripiispanen)
 * 0.1.3 Bumped http-proxy dependency to 0.10.2
 * 0.1.4 Added proxy rewrite support (thanks to @slawrence)
+* 0.1.5 Default rejectUnauthorized to false to allow self-signed certificates over SSL

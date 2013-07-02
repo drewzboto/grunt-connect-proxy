@@ -31,6 +31,7 @@ module.exports = function(grunt) {
             port: 80,
             https: false,
             changeOrigin: false,
+            rejectUnauthorized: false,
             rules: []
         });
         if (_.isUndefined(proxyOption.host) || _.isUndefined(proxyOption.context)) {
@@ -38,7 +39,7 @@ module.exports = function(grunt) {
         } else {
             proxyOption.rules = utils.processRewrites(proxyOption.rewrite, grunt.log);
             utils.registerProxy({
-              server: new httpProxy.HttpProxy({ 
+              server: new httpProxy.HttpProxy({
                 target: proxyOption,
                 changeOrigin: proxyOption.changeOrigin
               }),

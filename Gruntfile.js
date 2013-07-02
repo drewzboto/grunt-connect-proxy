@@ -48,6 +48,7 @@ module.exports = function(grunt) {
               host: 'www.full.com',
               port: 8080,
               https: true,
+              rejectUnauthorized: true,
               changeOrigin: true,
               rewrite: {
                 '^/full': '/anothercontext'
@@ -118,19 +119,19 @@ module.exports = function(grunt) {
   // Whenever the "test" task is run, first clean the "tmp" dir, then run this
   // plugin's task(s), then test the result.
   grunt.registerTask('test', [
-    'clean', 
-    'configureProxies', 
-    'nodeunit:tests', 
-    'configureProxies:server2', 
+    'clean',
+    'configureProxies',
+    'nodeunit:tests',
+    'configureProxies:server2',
     'nodeunit:server2',
-    'configureProxies:server3', 
+    'configureProxies:server3',
     'nodeunit:server3',
     ]);
 
   // specifically test that option inheritance works for multi-level config
   grunt.registerTask('test-inheritance', [
-    'clean', 
-    'configureProxies:server2', 
+    'clean',
+    'configureProxies:server2',
     'nodeunit:server2',
   ]);
 
