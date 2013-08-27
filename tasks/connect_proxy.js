@@ -46,6 +46,7 @@ module.exports = function(grunt) {
               config: proxyOption
             });
             grunt.log.writeln('Proxy created for: ' +  proxyOption.context);
+            grunt.log.writeln('Proxy created to:  ' +  proxyOption.host + ':' + proxyOption.port);
         }
     });
   });
