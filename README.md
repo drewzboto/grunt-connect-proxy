@@ -43,9 +43,10 @@ grunt.initConfig({
         }
 })
 ```
-####
-Adding the middleware
-Expose the proxy function to use in the middleware, at the top of the grunt file:
+#### Adding the middleware
+
+##### With Livereload
+Expose the proxy function to use in the middleware, at the top of the Gruntfile:
 ```js
 var proxySnippet = require('grunt-connect-proxy/lib/utils').proxyRequest;
 ```
@@ -64,6 +65,35 @@ Add the middleware call from the connect option middleware hook
             }
         }
 ```
+
+##### Without Livereload
+
+It is possible to add the proxy middleware without Livereload as follows:
+
+```js
+   // server
+    connect: {
+      server: {
+        options: {
+          port: 8000,
+          base: 'public',
+          logger: 'dev',
+          hostname: 'localhost',
+          middleware: function (connect, options) {
+             var config = [ // Serve static files.
+                                 connect.static(options.base),
+                                 // Make empty directories browsable.
+                                 connect.directory(options.base)
+                             ];
+            var proxy = require('grunt-connect-proxy/lib/utils').proxyRequest;
+            config.unshift(proxy);
+            return config;
+          }
+        }
+      }
+	  // ...
+```
+
 ### Adding the configureProxy task to the server task
 For the server task, add the configureProxies task before the connect task
 ```js
