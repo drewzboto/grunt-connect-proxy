@@ -37,7 +37,8 @@ grunt.initConfig({
                     host: '10.10.2.202',
                     port: 8080,
                     https: false,
-                    changeOrigin: false
+                    changeOrigin: false,
+                    xforward: false
                 }
             ]
         }
@@ -148,6 +149,16 @@ Default: false
 
 Whether to reject self-signed certificates when https: true is set. Defaults to accept self-signed certs since proxy is meant for development environments.
 
+#### options.xforward: 
+Type: `Boolean`
+Default: false
+
+Whether to add x-forward headers to the proxy request, such as
+  "x-forwarded-for": "127.0.0.1",
+  "x-forwarded-port": 50892,
+  "x-forwarded-proto": "http"
+
+
 #### options.appendProxies
 Type: `Boolean`
 Default: true
@@ -225,3 +236,4 @@ grunt.registerTask('e2etest', function (target) {
 * 0.1.3 Bumped http-proxy dependency to 0.10.2
 * 0.1.4 Added proxy rewrite support (thanks to @slawrence)
 * 0.1.5 Default rejectUnauthorized to false to allow self-signed certificates over SSL
+* 0.1.6 Add xforward option

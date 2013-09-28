@@ -50,6 +50,7 @@ module.exports = function(grunt) {
               https: true,
               rejectUnauthorized: true,
               changeOrigin: true,
+              xforward: true,
               rewrite: {
                 '^/full': '/anothercontext'
               }

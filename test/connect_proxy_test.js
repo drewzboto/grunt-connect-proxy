@@ -29,7 +29,7 @@ exports.connect_proxy = {
     done();
   },
   default_options: function(test) {
-    test.expect(8);
+    test.expect(9);
     var proxies = utils.proxies();
 
     test.equal(proxies.length, 4, 'should return four valid proxies');
@@ -40,11 +40,12 @@ exports.connect_proxy = {
     test.equal(proxies[0].config.https, false, 'should have default http');
     test.equal(proxies[0].config.rejectUnauthorized, false, 'should have reject unauthorized default to false');
     test.equal(proxies[0].config.changeOrigin, false, 'should have default change origin');
+    test.equal(proxies[0].config.xforward, false, 'should have default xforward');
 
     test.done();
   },
   full_options: function(test) {
-    test.expect(11);
+    test.expect(12);
     var proxies = utils.proxies();
 
     test.equal(proxies.length, 4, 'should return four valid proxies');
@@ -55,6 +56,7 @@ exports.connect_proxy = {
     test.equal(proxies[1].config.https, true, 'should have http set from config');
     test.equal(proxies[1].config.rejectUnauthorized, true, 'should have reject unauthorized set from config');
     test.equal(proxies[1].config.changeOrigin, true, 'should have change origin set from config');
+    test.equal(proxies[1].config.xforward, true, 'should have xforward set from config');
     test.deepEqual(proxies[1].config.rewrite, { '^/full': '/anothercontext' }, 'should have rewrite set from config');
     test.equal(proxies[1].config.rules.length, 1, 'rules array should have an item');
     test.deepEqual(proxies[1].config.rules[0], { from: new RegExp('^/full'), to: '/anothercontext'}, 'rules object should be converted to regex');

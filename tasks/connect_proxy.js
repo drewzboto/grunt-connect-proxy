@@ -43,6 +43,7 @@ module.exports = function(grunt) {
             port: 80,
             https: false,
             changeOrigin: false,
+            xforward: false,
             rejectUnauthorized: false,
             rules: []
         });
@@ -51,7 +52,10 @@ module.exports = function(grunt) {
             utils.registerProxy({
               server: new httpProxy.HttpProxy({
                 target: proxyOption,
-                changeOrigin: proxyOption.changeOrigin
+                changeOrigin: proxyOption.changeOrigin,
+                enable : {
+                    xforward: proxyOption.xforward // enables X-Forwarded-For
+                }
               }),
               config: proxyOption
             });
