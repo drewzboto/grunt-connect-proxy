@@ -16,6 +16,17 @@ module.exports = function(grunt) {
     var httpProxy = require('http-proxy');
     var proxyOption;
     var proxyOptions = [];
+    var validateProxyConfig = function(proxyOption) {
+        if (_.isUndefined(proxyOption.host) || _.isUndefined(proxyOption.context)) {
+            grunt.log.error('Proxy missing host or context configuration');
+            return false;
+        }
+        if (proxyOption.https && proxyOption.port === 80) {
+            grunt.log.warn('Proxy  for ' + proxyOption.context + ' is using https on port 80. Are you sure this is correct?');
+        }
+        return true;
+    };
+
     utils.reset();
     utils.log = grunt.log;
     if (config) {
@@ -35,9 +46,7 @@ module.exports = function(grunt) {
             rejectUnauthorized: false,
             rules: []
         });
-        if (_.isUndefined(proxyOption.host) || _.isUndefined(proxyOption.context)) {
-            grunt.log.error('Proxy missing host or context configuration');
-        } else {
+        if (validateProxyConfig(proxyOption)) {
             proxyOption.rules = utils.processRewrites(proxyOption.rewrite);
             utils.registerProxy({
               server: new httpProxy.HttpProxy({
