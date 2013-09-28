@@ -8,11 +8,11 @@
 
 'use strict';
 var utils = require('../lib/utils');
+var _ = require('lodash');
 
 module.exports = function(grunt) {
   grunt.registerTask('configureProxies', 'Configure any specified connect proxies.', function(config) {
     // setup proxy
-    var _ = grunt.util._;
     var httpProxy = require('http-proxy');
     var proxyOption;
     var proxyOptions = [];

@@ -18,6 +18,7 @@ module.exports = function(grunt) {
       all: [
         'Gruntfile.js',
         'tasks/*.js',
+        'lib/*.js',
         '<%= nodeunit.tests %>',
       ],
       options: {
@@ -77,7 +78,11 @@ module.exports = function(grunt) {
             },
             {
               host: 'www.missingcontext.com',
-            }
+            },
+            {
+              context: ['/array1','/array2'],
+              host: 'www.defaults.com'
+            },
       ],
       server2: {
         proxies: [

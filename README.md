@@ -116,9 +116,11 @@ For the server task, add the configureProxies task before the connect task
 The available configuration options from a given proxy are generally the same as what is provided by the underlying [httpproxy](https://github.com/nodejitsu/node-http-proxy) library
 
 #### options.context
-Type: `String`
+Type: `String` or `Array`
 
-The context to match requests against. Matching requests will be proxied. Should start with /. Should not end with /
+The context(s) to match requests against. Matching requests will be proxied. Should start with /. Should not end with /
+Multiple contexts can be matched for the same proxy rule via an array such as:
+context: ['/api', 'otherapi'] 
 
 #### options.host
 Type: `String`
@@ -236,4 +238,4 @@ grunt.registerTask('e2etest', function (target) {
 * 0.1.3 Bumped http-proxy dependency to 0.10.2
 * 0.1.4 Added proxy rewrite support (thanks to @slawrence)
 * 0.1.5 Default rejectUnauthorized to false to allow self-signed certificates over SSL
-* 0.1.6 Add xforward option
+* 0.1.6 Add xforward option, added support for context arrays, added debug logging
