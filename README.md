@@ -184,6 +184,11 @@ proxies: [
 ]
 ```
 
+#### options.timeout
+Type: `Number`
+
+The connection timeout in milliseconds. The default timeout is 2 minutes (120000 ms).
+
 ## Contributing
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
 
