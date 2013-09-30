@@ -55,7 +55,8 @@ module.exports = function(grunt) {
                 changeOrigin: proxyOption.changeOrigin,
                 enable : {
                     xforward: proxyOption.xforward // enables X-Forwarded-For
-                }
+                },
+                timeout: proxyOption.timeout
               }),
               config: proxyOption
             });
