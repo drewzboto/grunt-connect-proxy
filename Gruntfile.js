@@ -54,7 +54,8 @@ module.exports = function(grunt) {
               xforward: true,
               rewrite: {
                 '^/full': '/anothercontext'
-              }
+              },
+              timeout: 5000
             },
             {
               context: '/context/test',
