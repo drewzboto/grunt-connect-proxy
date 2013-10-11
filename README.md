@@ -116,11 +116,14 @@ For the server task, add the configureProxies task before the connect task
 The available configuration options from a given proxy are generally the same as what is provided by the underlying [httpproxy](https://github.com/nodejitsu/node-http-proxy) library
 
 #### options.context
-Type: `String` or `Array`
+Type: `String`, `Array`, or `Object`
 
 The context(s) to match requests against. Matching requests will be proxied. Should start with /. Should not end with /
+
 Multiple contexts can be matched for the same proxy rule via an array such as:
-context: ['/api', 'otherapi'] 
+`context: ['/api', '/otherapi']`.
+
+If the context is an object, it will match the objects keys as the domain or subdomain, and the associated value as the path: `context: { 'subdomain.localhost': '/api'}`
 
 #### options.host
 Type: `String`
@@ -189,10 +192,7 @@ Type: `Number`
 
 The connection timeout in milliseconds. The default timeout is 2 minutes (120000 ms).
 
-## Contributing
-In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
-
-#### Multi-server proxy configuration
+### Multi-server proxy configuration
 
 grunt-contrib-connect multi-server configuration is supported. You can define _proxies_ blocks in per-server options and refer to those blocks in task invocation.
 
@@ -234,6 +234,41 @@ grunt.registerTask('e2etest', function (target) {
     ]);
 });
 ```
+
+### Subdomain matching
+
+You can restrict proxies to certain subdomains two ways.  You can define the proxy context as an object whose keys/values map to subdomains/paths:
+
+```js
+proxies: [
+    context: {
+        'subdomain.localhost': '/api'
+    },
+    host: 'www.example.org'
+]
+```
+
+If you are using a multi-server proxy configuration, you can specify a domain for the entire server block, and it will be applied to all proxies in the block (unless those proxies also specify their own subdomain in the context as above):
+
+```js
+connect: {
+    options: { ... },
+    server2: {
+        domain: 'subdomain.localhost',
+        proxies: [
+            {
+                context: '/api',
+                host: 'www.example.org'
+            }
+        ]
+    }
+}
+```
+
+Using both methods, the domain will match to the beginning of the request domain, so `context: { 'subdomain.localhost': '/' }` would match on a request to subdomain.localhost.com.
+
+## Contributing
+In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
 
 
 ## Release History
