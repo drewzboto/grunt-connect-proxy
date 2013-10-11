@@ -60,7 +60,13 @@ module.exports = function(grunt) {
               }),
               config: proxyOption
             });
-            grunt.log.writeln('Proxy created for: ' +  proxyOption.context + ' to ' + proxyOption.host + ':' + proxyOption.port);
+            if (_.isString(proxyOption.context) || _.isArray(proxyOption.context)) {
+                grunt.log.writeln('Proxy created for: ' +  proxyOption.context + ' to ' + proxyOption.host + ':' + proxyOption.port);
+            } else {
+                _.each(proxyOption.context, function (url, host) {
+                    grunt.log.writeln('Proxy created for: ' +  host + '*:/' + url + ' to ' + proxyOption.host + ':' + proxyOption.port);
+                });
+            }
         }
     });
   });
