@@ -34,7 +34,9 @@ module.exports = function(grunt) {
         if (typeof connectOptions.appendProxies === 'undefined' || connectOptions.appendProxies) {
             proxyOptions = proxyOptions.concat(grunt.config('connect.proxies') || []);
         }
-        proxyOptions = proxyOptions.concat(connectOptions.proxies || []);
+
+        var serverProxies = utils.addDomainToProxies(connectOptions.domain, connectOptions.proxies);
+        proxyOptions = proxyOptions.concat(serverProxies || []);
     } else {
         proxyOptions = proxyOptions.concat(grunt.config('connect.proxies') || []);
     }
