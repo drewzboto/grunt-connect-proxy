@@ -103,6 +103,27 @@ module.exports = function(grunt) {
             changeOrigin: true
           }
         ]
+      },
+      server4: {
+        appendProxies: false,
+        proxies: [
+          {
+            context: {
+              'alternate.localhost': '/'
+            },
+            host: 'www.server4.com'
+          }
+        ]
+      },
+      server5: {
+        appendProxies: false,
+        domain: 'alternate.localhost',
+        proxies: [
+          {
+            context: '/',
+            host: 'www.server5.com'
+          }
+        ]
       }
     },
 
@@ -110,7 +131,9 @@ module.exports = function(grunt) {
     nodeunit: {
       tests: ['test/connect_proxy_test.js'],
       server2: 'test/server2_proxy_test.js',
-      server3: 'test/server3_proxy_test.js'
+      server3: 'test/server3_proxy_test.js',
+      server4: 'test/server4_proxy_test.js',
+      server5: 'test/server5_proxy_test.js'
     },
 
   });
@@ -133,6 +156,10 @@ module.exports = function(grunt) {
     'nodeunit:server2',
     'configureProxies:server3',
     'nodeunit:server3',
+    'configureProxies:server4',
+    'nodeunit:server4',
+    'configureProxies:server5',
+    'nodeunit:server5'
     ]);
 
   // specifically test that option inheritance works for multi-level config

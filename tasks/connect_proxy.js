@@ -34,7 +34,9 @@ module.exports = function(grunt) {
         if (typeof connectOptions.appendProxies === 'undefined' || connectOptions.appendProxies) {
             proxyOptions = proxyOptions.concat(grunt.config('connect.proxies') || []);
         }
-        proxyOptions = proxyOptions.concat(connectOptions.proxies || []);
+
+        var serverProxies = utils.addDomainToProxies(connectOptions.domain, connectOptions.proxies);
+        proxyOptions = proxyOptions.concat(serverProxies || []);
     } else {
         proxyOptions = proxyOptions.concat(grunt.config('connect.proxies') || []);
     }
@@ -60,7 +62,13 @@ module.exports = function(grunt) {
               }),
               config: proxyOption
             });
-            grunt.log.writeln('Proxy created for: ' +  proxyOption.context + ' to ' + proxyOption.host + ':' + proxyOption.port);
+            if (_.isString(proxyOption.context) || _.isArray(proxyOption.context)) {
+                grunt.log.writeln('Proxy created for: ' +  proxyOption.context + ' to ' + proxyOption.host + ':' + proxyOption.port);
+            } else {
+                _.each(proxyOption.context, function (url, host) {
+                    grunt.log.writeln('Proxy created for: ' +  host + '*:/' + url + ' to ' + proxyOption.host + ':' + proxyOption.port);
+                });
+            }
         }
     });
   });
