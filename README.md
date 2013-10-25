@@ -122,6 +122,22 @@ The context(s) to match requests against. Matching requests will be proxied. Sho
 Multiple contexts can be matched for the same proxy rule via an array such as:
 context: ['/api', 'otherapi'] 
 
+#### options.contextMatcher
+Type: `Function`
+
+Instead of setting options.context, you can set a custom matcher function to allow complex rules.
+
+```js
+{
+  host: 'www.example.com',
+  contextMatcher: function(url) {
+    // should match any /api call, except /api/user
+    var parts = url.split('/');
+    return (parts[1] === 'api' && parts[2] !== 'user');
+  }
+}
+```
+
 #### options.host
 Type: `String`
 
