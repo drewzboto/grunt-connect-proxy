@@ -184,6 +184,11 @@ proxies: [
 ]
 ```
 
+### options.rewriteCookiePath
+Type: `String`
+
+Rewrite the "Path" from "Set-Cookie" response headers, useful when the host server has a different context path than your app.
+
 #### options.timeout
 Type: `Number`
 
