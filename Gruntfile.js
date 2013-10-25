@@ -84,6 +84,13 @@ module.exports = function(grunt) {
               context: ['/array1','/array2'],
               host: 'www.defaults.com'
             },
+            {
+              host: 'www.defaults.com',
+              contextMatcher: function(url) {
+                var parts = url.split('/');
+                return (parts[1] === 'api' && parts[2] !== 'user');
+              }
+            }
       ],
       server2: {
         proxies: [

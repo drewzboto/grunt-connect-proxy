@@ -32,7 +32,7 @@ exports.connect_proxy = {
     test.expect(9);
     var proxies = utils.proxies();
 
-    test.equal(proxies.length, 5, 'should return five valid proxies');
+    test.equal(proxies.length, 6, 'should return six valid proxies');
     test.notEqual(proxies[0].server, null, 'server should be configured');
     test.equal(proxies[0].config.context, '/defaults', 'should have context set from config');
     test.equal(proxies[0].config.host, 'www.defaults.com', 'should have host set from config');
@@ -48,7 +48,7 @@ exports.connect_proxy = {
     test.expect(12);
     var proxies = utils.proxies();
 
-    test.equal(proxies.length, 5, 'should return five valid proxies');
+    test.equal(proxies.length, 6, 'should return six valid proxies');
     test.notEqual(proxies[1].server, null, 'server should be configured');
     test.equal(proxies[1].config.context, '/full', 'should have context set from config');
     test.equal(proxies[1].config.host, 'www.full.com', 'should have host set from config');
@@ -77,7 +77,7 @@ exports.connect_proxy = {
     test.expect(5);
     var proxies = utils.proxies();
 
-    test.equal(proxies.length, 5, 'should not add the 2 invalid proxies');
+    test.equal(proxies.length, 6, 'should not add the 2 invalid proxies');
     test.notEqual(proxies[0].config.context, '/missinghost', 'should not have context set from config with missing host');
     test.notEqual(proxies[0].config.host, 'www.missingcontext.com', 'should not have host set from config with missing context');
     test.notEqual(proxies[1].config.context, '/missinghost', 'should not have context set from config with missing host');
@@ -88,9 +88,33 @@ exports.connect_proxy = {
   invalid_rewrite: function(test) {
     test.expect(3);
     var proxies = utils.proxies();
-    test.equal(proxies.length, 5, 'proxies should still be valid');
+    test.equal(proxies.length, 6, 'proxies should still be valid');
     test.equal(proxies[3].config.rules.length, 1, 'rules array should have one valid item');
     test.deepEqual(proxies[3].config.rules[0], { from: new RegExp('^/in'), to: '/thisis'}, 'rules object should be converted to regex');
+
+    test.done();
+  },
+
+  default_matcher: function(test) {
+    test.expect(4);
+    var proxies = utils.proxies();
+
+    var firstProxyConfig = proxies[0].config;
+    test.notEqual(firstProxyConfig.contextMatcher, null, 'every proxy should have a default contextMatcher');
+    test.equal(firstProxyConfig.contextMatcher( '/api/user', '/api/user' ), true, 'default matcher should match the context, when string');
+    test.equal(firstProxyConfig.contextMatcher( '/api/user', ['/api', '/other'] ), true, 'default matcher should match the context, when array');
+    test.equal(firstProxyConfig.contextMatcher( '/other/call', ['/api', '/other'] ), true, 'default matcher should match the context, when array');
+
+    test.done();
+  },
+
+  custom_matcher: function(test) {
+    test.expect(3);
+    var proxies = utils.proxies();
+
+    test.equal(proxies[5].config.contextMatcher('/api/file'), true, 'custom matcher should match any /api call, except /api/user');
+    test.equal(proxies[5].config.contextMatcher('/api/storage'), true, 'custom matcher should match any /api call, except /api/user');
+    test.equal(proxies[5].config.contextMatcher('/api/user'), false, 'custom matcher should not match /api/user');
 
     test.done();
   }
