@@ -6,7 +6,7 @@ exports.server3_proxy_test = {
     done();
   },
   proxy_options_test: function(test) {
-    test.expect(8);
+    test.expect(9);
     var proxies = utils.proxies();
 
     test.equal(proxies.length, 1, 'should have just one proxy');
@@ -16,6 +16,7 @@ exports.server3_proxy_test = {
     test.equal(proxies[0].config.port, 8080, 'should have port 8080');
     test.equal(proxies[0].config.https, false, 'should have default http');
     test.equal(proxies[0].config.changeOrigin, true, 'should have change origin from task');
+    test.equal(proxies[0].config.ws, false, 'should have ws default to false');
     test.equal(proxies[0].config.rules.length, 0, 'rules array should have zero items');
 
     test.done();

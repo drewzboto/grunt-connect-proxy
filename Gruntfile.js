@@ -55,7 +55,8 @@ module.exports = function(grunt) {
               rewrite: {
                 '^/full': '/anothercontext'
               },
-              timeout: 5000
+              timeout: 5000,
+              ws: true
             },
             {
               context: '/context/test',
