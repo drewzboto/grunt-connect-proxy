@@ -63,13 +63,14 @@ Add the middleware call from the connect option middleware hook
 	                    if (!Array.isArray(options.base)) {
 	                        options.base = [options.base];
 	                    }
+     
+                        // Setup the proxy
+                        middlewares.push(require('grunt-connect-proxy/lib/utils').proxyRequest);
+
 	                    options.base.forEach(function(base) {
 	                        // Serve static files.
 	                        middlewares.push(connect.static(base));
 	                    });
-	 
-	                    // Setup the proxy
-	                    middlewares.push(require('grunt-connect-proxy/lib/utils').proxyRequest);
 	 
 	                    // Make directory browse-able.
 	                    middlewares.push(connect.directory(directory));
