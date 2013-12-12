@@ -47,10 +47,6 @@ grunt.initConfig({
 #### Adding the middleware
 
 ##### With Livereload
-Expose the proxy function to use in the middleware, at the top of the Gruntfile:
-```js
-var proxySnippet = require('grunt-connect-proxy/lib/utils').proxyRequest;
-```
 
 Add the middleware call from the connect option middleware hook
 ```js
