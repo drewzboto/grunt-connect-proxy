@@ -199,6 +199,12 @@ Type: `Number`
 
 The connection timeout in milliseconds. The default timeout is 2 minutes (120000 ms).
 
+#### options.ws
+Type: `Boolean`
+Default: false
+
+Set to true to proxy websockets.
+
 ## Contributing
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
 

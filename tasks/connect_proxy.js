@@ -45,7 +45,8 @@ module.exports = function(grunt) {
             changeOrigin: false,
             xforward: false,
             rejectUnauthorized: false,
-            rules: []
+            rules: [],
+            ws: false
         });
         if (validateProxyConfig(proxyOption)) {
             proxyOption.rules = utils.processRewrites(proxyOption.rewrite);
