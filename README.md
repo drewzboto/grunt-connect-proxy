@@ -1,6 +1,6 @@
 # grunt-connect-proxy
 
-> Provides a http proxy as middleware for the grunt-contrib-connect plugin. 
+> Provides a http proxy as middleware for the grunt-contrib-connect plugin.
 
 ## Getting Started
 This plugin requires Grunt `~0.4.1`
@@ -27,6 +27,7 @@ In your project's Gruntfile, add a section named `proxies` to your existing conn
 ```js
 grunt.initConfig({
     connect: {
+        server: {
             options: {
                 port: 9000,
                 hostname: 'localhost'
@@ -42,6 +43,7 @@ grunt.initConfig({
                 }
             ]
         }
+    }
 })
 ```
 #### Adding the middleware
@@ -63,13 +65,13 @@ Add the middleware call from the connect option middleware hook
 	                        // Serve static files.
 	                        middlewares.push(connect.static(base));
 	                    });
-	 
+
 	                    // Setup the proxy
 	                    middlewares.push(require('grunt-connect-proxy/lib/utils').proxyRequest);
-	 
+
 	                    // Make directory browse-able.
 	                    middlewares.push(connect.directory(directory));
-	 
+
 	                    return middlewares;
 	                }
                 }
@@ -91,18 +93,20 @@ It is possible to add the proxy middleware without Livereload as follows:
           logger: 'dev',
           hostname: 'localhost',
           middleware: function (connect, options) {
-             var config = [ // Serve static files.
-                                 connect.static(options.base),
-                                 // Make empty directories browsable.
-                                 connect.directory(options.base)
-                             ];
-            var proxy = require('grunt-connect-proxy/lib/utils').proxyRequest;
-            config.unshift(proxy);
-            return config;
+             var proxy = require('grunt-connect-proxy/lib/utils').proxyRequest;
+             return [
+                // Include the proxy first
+                proxy,
+                // Serve static files.
+                connect.static(options.base),
+                // Make empty directories browsable.
+                connect.directory(options.base)
+             ];
           }
-        }
+        },
+        proxies: [ /* as defined above */ ]
       }
-	  // ...
+  }
 ```
 
 ### Adding the configureProxy task to the server task
@@ -112,7 +116,7 @@ For the server task, add the configureProxies task before the connect task
         grunt.task.run([
             'clean:server',
             'compass:server',
-            'configureProxies',
+            'configureProxies:server',
             'livereload-start',
             'connect:livereload',
             'open',
@@ -121,6 +125,7 @@ For the server task, add the configureProxies task before the connect task
     });
 ```
 
+**IMPORTANT**: You must specify the connect target in the `configureProxies` task.
 
 ### Options
 The available configuration options from a given proxy are generally the same as what is provided by the underlying [httpproxy](https://github.com/nodejitsu/node-http-proxy) library
@@ -130,7 +135,7 @@ Type: `String` or `Array`
 
 The context(s) to match requests against. Matching requests will be proxied. Should start with /. Should not end with /
 Multiple contexts can be matched for the same proxy rule via an array such as:
-context: ['/api', 'otherapi'] 
+context: ['/api', 'otherapi']
 
 #### options.host
 Type: `String`
@@ -141,7 +146,7 @@ The host to proxy to. Should not start with the http/https protocol.
 Type: `Number`
 Default: 80
 
-The port to proxy to. 
+The port to proxy to.
 
 #### options.https
 Type: `Boolean`
@@ -155,13 +160,13 @@ Default: false
 
 Whether to change the origin on the request to the proxy, or keep the original origin.
 
-#### options.rejectUnauthorized: 
+#### options.rejectUnauthorized:
 Type: `Boolean`
 Default: false
 
 Whether to reject self-signed certificates when https: true is set. Defaults to accept self-signed certs since proxy is meant for development environments.
 
-#### options.xforward: 
+#### options.xforward:
 Type: `Boolean`
 Default: false
 
