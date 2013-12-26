@@ -19,16 +19,16 @@ module.exports = function(grunt) {
         'Gruntfile.js',
         'tasks/*.js',
         'lib/*.js',
-        '<%= nodeunit.tests %>',
+        '<%= nodeunit.tests %>'
       ],
       options: {
-        jshintrc: '.jshintrc',
-      },
+        jshintrc: '.jshintrc'
+      }
     },
 
     // Before generating any new files, remove any previously-created files.
     clean: {
-      tests: ['tmp'],
+      tests: ['tmp']
     },
 
     // Configuration to be run (and then tested).
@@ -78,7 +78,7 @@ module.exports = function(grunt) {
               context: '/missinghost'
             },
             {
-              host: 'www.missingcontext.com',
+              host: 'www.missingcontext.com'
             },
             {
               context: ['/array1','/array2'],
@@ -134,14 +134,14 @@ module.exports = function(grunt) {
     'configureProxies:server2',
     'nodeunit:server2',
     'configureProxies:server3',
-    'nodeunit:server3',
+    'nodeunit:server3'
     ]);
 
   // specifically test that option inheritance works for multi-level config
   grunt.registerTask('test-inheritance', [
     'clean',
     'configureProxies:server2',
-    'nodeunit:server2',
+    'nodeunit:server2'
   ]);
 
 
