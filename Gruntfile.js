@@ -58,7 +58,8 @@ module.exports = function(grunt) {
               timeout: 5000,
               headers: {
                 "X-Proxied-Header": "added"
-              }
+              },
+              ws: true
             },
             {
               context: '/context/test',

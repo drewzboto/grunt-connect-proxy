@@ -212,6 +212,12 @@ Type: `Object`
 
 A map of headers to be added to proxied requests.
 
+#### options.ws
+Type: `Boolean`
+Default: false
+
+Set to true to proxy websockets.
+
 ## Contributing
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
 
