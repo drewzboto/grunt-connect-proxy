@@ -83,7 +83,7 @@ module.exports = function(grunt) {
             {
               context: ['/array1','/array2'],
               host: 'www.defaults.com'
-            },
+            }
       ],
       server2: {
         proxies: [
@@ -108,10 +108,11 @@ module.exports = function(grunt) {
 
     // Unit tests.
     nodeunit: {
-      tests: ['test/connect_proxy_test.js'],
+      tests: 'test/connect_proxy_test.js',
       server2: 'test/server2_proxy_test.js',
-      server3: 'test/server3_proxy_test.js'
-    },
+      server3: 'test/server3_proxy_test.js',
+      utils: 'test/utils_test.js'
+    }
 
   });
 
@@ -127,6 +128,7 @@ module.exports = function(grunt) {
   // plugin's task(s), then test the result.
   grunt.registerTask('test', [
     'clean',
+    'nodeunit:utils',
     'configureProxies',
     'nodeunit:tests',
     'configureProxies:server2',
