@@ -273,3 +273,4 @@ grunt.registerTask('e2etest', function (target) {
 * 0.1.4 Added proxy rewrite support (thanks to @slawrence)
 * 0.1.5 Default rejectUnauthorized to false to allow self-signed certificates over SSL
 * 0.1.6 Add xforward option, added support for context arrays, added debug logging
+* 0.1.7 Added WebSocket support (thanks for @killfill), Headers support (thanks to @gadr), various docs fixed
