@@ -19,16 +19,16 @@ module.exports = function(grunt) {
         'Gruntfile.js',
         'tasks/*.js',
         'lib/*.js',
-        '<%= nodeunit.tests %>',
+        '<%= nodeunit.tests %>'
       ],
       options: {
-        jshintrc: '.jshintrc',
-      },
+        jshintrc: '.jshintrc'
+      }
     },
 
     // Before generating any new files, remove any previously-created files.
     clean: {
-      tests: ['tmp'],
+      tests: ['tmp']
     },
 
     // Configuration to be run (and then tested).
@@ -55,7 +55,10 @@ module.exports = function(grunt) {
               rewrite: {
                 '^/full': '/anothercontext'
               },
-              timeout: 5000
+              timeout: 5000,
+              headers: {
+                "X-Proxied-Header": "added"
+              }
             },
             {
               context: '/context/test',
@@ -78,7 +81,7 @@ module.exports = function(grunt) {
               context: '/missinghost'
             },
             {
-              host: 'www.missingcontext.com',
+              host: 'www.missingcontext.com'
             },
             {
               context: ['/array1','/array2'],
@@ -103,6 +106,24 @@ module.exports = function(grunt) {
             changeOrigin: true
           }
         ]
+      },
+      request: {
+        options: {
+          middleware: function (connect, options) {
+            return [require('./lib/utils').proxyRequest];
+          }
+        },
+        proxies: [
+          {
+            context: '/request',
+            host: 'localhost',
+            port: 8080,
+            changeOrigin: true,
+            headers: {
+              "x-proxied-header": "added"
+            }
+          }
+        ]
       }
     },
 
@@ -111,7 +132,8 @@ module.exports = function(grunt) {
       tests: 'test/connect_proxy_test.js',
       server2: 'test/server2_proxy_test.js',
       server3: 'test/server3_proxy_test.js',
-      utils: 'test/utils_test.js'
+      utils: 'test/utils_test.js',
+      request: 'test/request_test.js'
     }
 
   });
@@ -120,6 +142,7 @@ module.exports = function(grunt) {
   grunt.loadTasks('tasks');
 
   // These plugins provide necessary tasks.
+  grunt.loadNpmTasks('grunt-contrib-connect');
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.loadNpmTasks('grunt-contrib-nodeunit');
@@ -135,13 +158,16 @@ module.exports = function(grunt) {
     'nodeunit:server2',
     'configureProxies:server3',
     'nodeunit:server3',
+    'configureProxies:request',
+    'connect:request',
+    'nodeunit:request'
     ]);
 
   // specifically test that option inheritance works for multi-level config
   grunt.registerTask('test-inheritance', [
     'clean',
     'configureProxies:server2',
-    'nodeunit:server2',
+    'nodeunit:server2'
   ]);
 
 

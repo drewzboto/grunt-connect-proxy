@@ -39,7 +39,10 @@ grunt.initConfig({
                     port: 8080,
                     https: false,
                     changeOrigin: false,
-                    xforward: false
+                    xforward: false,
+                    headers: {
+                        "x-custom-added-header": value
+                    }
                 }
             ]
         }
@@ -203,6 +206,11 @@ proxies: [
 Type: `Number`
 
 The connection timeout in milliseconds. The default timeout is 2 minutes (120000 ms).
+
+#### options.headers
+Type: `Object`
+
+A map of headers to be added to proxied requests.
 
 ## Contributing
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
