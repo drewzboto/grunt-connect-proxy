@@ -59,20 +59,20 @@ Add the middleware call from the connect option middleware hook
             livereload: {
                 options: {
                     middleware: function (connect, options) {
-                        var middlewares = [];
                         if (!Array.isArray(options.base)) {
                             options.base = [options.base];
                         }
-                        var directory = options.directory || options.base[options.base.length - 1];
-                                     // Setup the proxy
-                                     middlewares.push(require('grunt-connect-proxy/lib/utils').proxyRequest);
 
+                        // Setup the proxy
+                        var middlewares = [require('grunt-connect-proxy/lib/utils').proxyRequest];
+
+                        // Serve static files.
                         options.base.forEach(function(base) {
-                            // Serve static files.
                             middlewares.push(connect.static(base));
                         });
 
                         // Make directory browse-able.
+                        var directory = options.directory || options.base[options.base.length - 1];
                         middlewares.push(connect.directory(directory));
 
                         return middlewares;
