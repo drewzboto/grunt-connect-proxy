@@ -60,10 +60,10 @@ Add the middleware call from the connect option middleware hook
                 options: {
                     middleware: function (connect, options) {
                         var middlewares = [];
-                        var directory = options.directory || options.base[options.base.length - 1];
                         if (!Array.isArray(options.base)) {
                             options.base = [options.base];
                         }
+                        var directory = options.directory || options.base[options.base.length - 1];
                                      // Setup the proxy
                                      middlewares.push(require('grunt-connect-proxy/lib/utils').proxyRequest);
 
