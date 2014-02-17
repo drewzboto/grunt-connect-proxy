@@ -10,7 +10,8 @@
 
 module.exports = function(grunt) {
 
-  var proxySnippet = require("./lib/utils.js").proxyRequest;
+  var proxyUtils = require("./lib/utils.js");
+  var proxySnippet = proxyUtils.proxyRequest;
 
   // Project configuration.
   grunt.initConfig({
@@ -52,9 +53,9 @@ module.exports = function(grunt) {
               rejectUnauthorized: true,
               changeOrigin: true,
               xforward: true,
-              rewrite: {
-                '^/full': '/anothercontext'
-              },
+              rewrite: [
+                proxyUtils.rewriteContext('^/full', '/anothercontext')
+              ],
               timeout: 5000,
               headers: {
                 "X-Proxied-Header": "added"
@@ -64,19 +65,19 @@ module.exports = function(grunt) {
             {
               context: '/context/test',
               host: 'www.anothercontext.com',
-              rewrite: {
-                '^/context': '/anothercontext',
-                'test': 'testing'
-              }
+              rewrite: [
+                proxyUtils.rewriteContext('^/context', '/anothercontext'),
+                proxyUtils.rewriteContext('test', 'testing')
+              ]
             },
             {
               context: '/invalidrewrite',
               host: 'www.invalidrewrite.com',
-              rewrite: {
-                '^/undefined': undefined,
-                '^/notstring': 13,
-                '^/in': '/thisis'
-              }
+              rewrite: [
+                proxyUtils.rewriteContext('^/undefined', undefined),
+                proxyUtils.rewriteContext('^/notstring', 13),
+                proxyUtils.rewriteContext('^/in', '/thisis')
+              ]
             },
             {
               context: '/missinghost'
@@ -87,6 +88,20 @@ module.exports = function(grunt) {
             {
               context: ['/array1','/array2'],
               host: 'www.defaults.com'
+            },
+            {
+              context: '/context/test',
+              host: 'www.oldsyntax.com',
+              rewrite: {
+                '^/context' : '/oldsyntax'
+              }
+            },
+            {
+              context: '/context/test',
+              host: 'www.anothercontext.com',
+              rewrite: [
+                proxyUtils.rewriteCookiePath('/path')
+              ]
             }
       ],
       server2: {
