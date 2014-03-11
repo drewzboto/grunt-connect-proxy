@@ -186,19 +186,22 @@ Default: true
 Set to false to isolate multi-task configuration proxy options from parent level instead of appending them.
 
 #### options.rewrite
-Type: `Object`
+Type: `Array`
 
-Allows rewrites of url (including context) when proxying. The object's keys serve as the regex used in the replacement operation. As an example the following proxy configuration will remove the context when proxying:
+Allows rewrites of url (including context) and cookie path when proxying. As an example the following proxy configuration will remove the context when proxying and rewrite all cookies path to '/api':
 
 ```js
+var proxyUtils = require('grunt-connect-proxy/lib/utils');
+
 proxies: [
     context: '/context',
     host: 'host',
     port: 8080,
-    rewrite: {
-        '^/removingcontext': '',
-        '^/changingcontext': '/anothercontext'
-    }
+    rewrite: [
+        proxyUtils.rewriteContext('^/removingcontext', ''),
+        proxyUtils.rewriteContext('^/changingcontext', '/anothercontext'),
+        proxyUtils.rewriteCookiePath('/api')
+    ]
 ]
 ```
 
