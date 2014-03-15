@@ -279,3 +279,4 @@ grunt.registerTask('e2etest', function (target) {
 * 0.1.7 Added WebSocket support (thanks for @killfill), Headers support (thanks to @gadr), various docs fixed
 * 0.1.8 Minor websocket bug fix
 * 0.1.9 Minor bug fix
+* 0.2.0 Config syntax reworked for rewrite and context matching
