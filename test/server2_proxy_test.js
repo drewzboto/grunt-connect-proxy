@@ -6,7 +6,7 @@ exports.server2_proxy_test = {
     done();
   },
   proxy_options_test: function(test) {
-    test.expect(11);
+    test.expect(10);
     var proxies = utils.proxies();
 
     test.equal(proxies.length, 6, 'should return six valid proxies');
@@ -17,7 +17,6 @@ exports.server2_proxy_test = {
     test.equal(proxies[5].config.host, 'www.server2.com', 'should have host set from config');
     test.equal(proxies[0].config.port, 80, 'should have default port 80');
     test.equal(proxies[0].config.https, false, 'should have default http');
-    test.equal(proxies[0].config.changeOrigin, false, 'should have default change origin');
     test.equal(proxies[0].config.ws, false, 'should have default ws to false');
     test.equal(proxies[0].config.rules.length, 0, 'rules array should have zero items');
 

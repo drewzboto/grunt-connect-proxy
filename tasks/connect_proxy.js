@@ -42,22 +42,17 @@ module.exports = function(grunt) {
         proxyOption = _.defaults(proxy,  {
             port: 80,
             https: false,
-            changeOrigin: false,
             xforward: false,
-            rejectUnauthorized: false,
             rules: [],
             ws: false
         });
         if (validateProxyConfig(proxyOption)) {
             proxyOption.rules = utils.processRewrites(proxyOption.rewrite);
             utils.registerProxy({
-              server: new httpProxy.HttpProxy({
+              server: httpProxy.createProxyServer({
                 target: proxyOption,
-                changeOrigin: proxyOption.changeOrigin,
-                enable : {
-                    xforward: proxyOption.xforward // enables X-Forwarded-For
-                },
-                timeout: proxyOption.timeout
+                secure: proxyOption.https,
+                xfwd: proxyOption.xforward
               }),
               config: proxyOption
             });

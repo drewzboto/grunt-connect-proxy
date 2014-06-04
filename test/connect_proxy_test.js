@@ -29,7 +29,7 @@ exports.connect_proxy = {
     done();
   },
   default_options: function(test) {
-    test.expect(10);
+    test.expect(8);
     var proxies = utils.proxies();
 
     test.equal(proxies.length, 5, 'should return five valid proxies');
@@ -38,15 +38,13 @@ exports.connect_proxy = {
     test.equal(proxies[0].config.host, 'www.defaults.com', 'should have host set from config');
     test.equal(proxies[0].config.port, 80, 'should have default port 80');
     test.equal(proxies[0].config.https, false, 'should have default http');
-    test.equal(proxies[0].config.rejectUnauthorized, false, 'should have reject unauthorized default to false');
-    test.equal(proxies[0].config.changeOrigin, false, 'should have default change origin');
     test.equal(proxies[0].config.xforward, false, 'should have default xforward');
     test.equal(proxies[0].config.ws, false, 'should have default ws to false');
 
     test.done();
   },
   full_options: function(test) {
-    test.expect(13);
+    test.expect(11);
     var proxies = utils.proxies();
 
     test.equal(proxies.length, 5, 'should return five valid proxies');
@@ -55,8 +53,6 @@ exports.connect_proxy = {
     test.equal(proxies[1].config.host, 'www.full.com', 'should have host set from config');
     test.equal(proxies[1].config.port, 8080, 'should have port set from config');
     test.equal(proxies[1].config.https, true, 'should have http set from config');
-    test.equal(proxies[1].config.rejectUnauthorized, true, 'should have reject unauthorized set from config');
-    test.equal(proxies[1].config.changeOrigin, true, 'should have change origin set from config');
     test.equal(proxies[1].config.xforward, true, 'should have xforward set from config');
     test.equal(proxies[1].config.ws, true, 'should have ws set from config');
     test.deepEqual(proxies[1].config.rewrite, { '^/full': '/anothercontext' }, 'should have rewrite set from config');

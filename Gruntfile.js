@@ -49,13 +49,10 @@ module.exports = function(grunt) {
               host: 'www.full.com',
               port: 8080,
               https: true,
-              rejectUnauthorized: true,
-              changeOrigin: true,
               xforward: true,
               rewrite: {
                 '^/full': '/anothercontext'
               },
-              timeout: 5000,
               headers: {
                 "X-Proxied-Header": "added"
               },
@@ -104,7 +101,6 @@ module.exports = function(grunt) {
             context: '/server3',
             host: 'www.server3.com',
             port: 8080,
-            changeOrigin: true
           }
         ]
       },
@@ -119,7 +115,6 @@ module.exports = function(grunt) {
             context: '/request',
             host: 'localhost',
             port: 8080,
-            changeOrigin: true,
             headers: {
               "x-proxied-header": "added"
             }

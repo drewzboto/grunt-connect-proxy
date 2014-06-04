@@ -38,7 +38,6 @@ grunt.initConfig({
                     host: '10.10.2.202',
                     port: 8080,
                     https: false,
-                    changeOrigin: false,
                     xforward: false,
                     headers: {
                         "x-custom-added-header": value
@@ -157,18 +156,6 @@ Default: false
 
 Whether to proxy with https
 
-#### options.changeOrigin
-Type: `Boolean`
-Default: false
-
-Whether to change the origin on the request to the proxy, or keep the original origin.
-
-#### options.rejectUnauthorized:
-Type: `Boolean`
-Default: false
-
-Whether to reject self-signed certificates when https: true is set. Defaults to accept self-signed certs since proxy is meant for development environments.
-
 #### options.xforward:
 Type: `Boolean`
 Default: false
@@ -202,11 +189,6 @@ proxies: [
 ]
 ```
 
-#### options.timeout
-Type: `Number`
-
-The connection timeout in milliseconds. The default timeout is 2 minutes (120000 ms).
-
 #### options.headers
 Type: `Object`
 
@@ -239,7 +221,6 @@ grunt.initConfig({
                         host: '10.10.2.202',
                         port: 8080,
                         https: false,
-                        changeOrigin: false
                     }
                 ]
             },
@@ -276,3 +257,4 @@ grunt.registerTask('e2etest', function (target) {
 * 0.1.7 Added WebSocket support (thanks for @killfill), Headers support (thanks to @gadr), various docs fixed
 * 0.1.8 Minor websocket bug fix
 * 0.1.10 Minor bug fix
+* 0.1.11 Fix Websocket support on Node 0.10 - Bumped http-proxy dependency to 1.1.4, Removed unsupported http-proxy options (rejectUnauthorized, timeout, changeOrigin)
