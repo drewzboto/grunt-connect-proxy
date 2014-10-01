@@ -53,6 +53,8 @@ module.exports = function(grunt) {
                 target: proxyOption,
                 secure: proxyOption.https,
                 xfwd: proxyOption.xforward
+              }).on('error', function (err, req, res) { 
+                grunt.log.error('Proxy error: ', err.code);
               }),
               config: proxyOption
             });
