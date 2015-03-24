@@ -118,6 +118,12 @@ module.exports = function(grunt) {
             headers: {
               "x-proxied-header": "added"
             }
+          },
+          {
+            context: '/hideHeaders',
+            host: 'localhost',
+            port: 8081,
+            hideHeaders: ['x-hidden-header-1', 'x-hidden-header-2']
           }
         ]
       }
@@ -129,7 +135,8 @@ module.exports = function(grunt) {
       server2: 'test/server2_proxy_test.js',
       server3: 'test/server3_proxy_test.js',
       utils: 'test/utils_test.js',
-      request: 'test/request_test.js'
+      request: 'test/request_test.js',
+      hideHeaders: 'test/hide_headers_test.js'
     }
 
   });
@@ -156,7 +163,8 @@ module.exports = function(grunt) {
     'nodeunit:server3',
     'configureProxies:request',
     'connect:request',
-    'nodeunit:request'
+    'nodeunit:request',
+    'nodeunit:hideHeaders'
     ]);
 
   // specifically test that option inheritance works for multi-level config
