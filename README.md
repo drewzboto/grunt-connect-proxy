@@ -41,7 +41,8 @@ grunt.initConfig({
                     xforward: false,
                     headers: {
                         "x-custom-added-header": value
-                    }
+                    },
+                    hideHeaders: ['x-removed-header']
                 }
             ]
         }
@@ -193,6 +194,11 @@ proxies: [
 Type: `Object`
 
 A map of headers to be added to proxied requests.
+
+#### options.hideHeaders
+Type: `Array`
+
+An array of headers that should be removed from the server's response.
 
 #### options.ws
 Type: `Boolean`
