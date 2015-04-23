@@ -264,3 +264,4 @@ grunt.registerTask('e2etest', function (target) {
 * 0.1.8 Minor websocket bug fix
 * 0.1.10 Minor bug fix
 * 0.1.11 Fix Websocket support on Node 0.10 - Bumped http-proxy dependency to 1.1.4, Removed unsupported http-proxy options (rejectUnauthorized, timeout, changeOrigin)
+* 0.2.0 Added hidden headers support
