@@ -95,16 +95,12 @@ It is possible to add the proxy middleware without Livereload as follows:
           base: 'public',
           logger: 'dev',
           hostname: 'localhost',
-          middleware: function (connect, options) {
+          middleware: function (connect, options, defaultMiddleware) {
              var proxy = require('grunt-connect-proxy/lib/utils').proxyRequest;
              return [
                 // Include the proxy first
-                proxy,
-                // Serve static files.
-                connect.static(options.base),
-                // Make empty directories browsable.
-                connect.directory(options.base)
-             ];
+                proxy
+             ].concat(defaultMiddleware);
           }
         },
         proxies: [ /* as defined above */ ]
