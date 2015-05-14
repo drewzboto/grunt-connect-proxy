@@ -39,5 +39,32 @@ exports.utils_test = {
     test.equal(match, true, 'should match array context with different negative context');
 
     test.done();
+  },
+
+  get_target_url_test: function(test){
+    var proxyOptions = {
+        host: 'foo.com',
+        https: true,
+        ws: false
+    };
+
+    test.expect(5);
+    test.equal(utils.getTargetUrl(proxyOptions), 'https://foo.com');
+
+    proxyOptions.https = false;
+    test.equal(utils.getTargetUrl(proxyOptions), 'http://foo.com');
+
+    proxyOptions.ws = true;
+    test.equal(utils.getTargetUrl(proxyOptions), 'ws://foo.com');
+
+    proxyOptions.https = true;
+    test.equal(utils.getTargetUrl(proxyOptions), 'wss://foo.com');
+
+    proxyOptions.port = 8080;
+    proxyOptions.ws = false;
+    proxyOptions.https = false;
+    test.equal(utils.getTargetUrl(proxyOptions), 'http://foo.com:8080');
+
+    test.done();
   }
-}
+};

@@ -40,7 +40,7 @@ module.exports = function(grunt) {
     }
     proxyOptions.forEach(function(proxy) {
         proxyOption = _.defaults(proxy,  {
-            port: 80,
+            port: proxy.https ? 443 : 80,
             https: false,
             xforward: false,
             rules: [],
@@ -49,14 +49,17 @@ module.exports = function(grunt) {
         if (validateProxyConfig(proxyOption)) {
             proxyOption.rules = utils.processRewrites(proxyOption.rewrite);
             utils.registerProxy({
-              server: httpProxy.createProxyServer({
-                target: proxyOption,
-                secure: proxyOption.https,
-                xfwd: proxyOption.xforward
-              }).on('error', function (err, req, res) { 
-                grunt.log.error('Proxy error: ', err.code);
-              }),
-              config: proxyOption
+                server: httpProxy.createProxyServer({
+                    target: utils.getTargetUrl(proxyOption),
+                    secure: proxyOption.https,
+                    xfwd: proxyOption.xforward,
+                    headers: {
+                        host: proxyOption.host
+                    }
+                }).on('error', function (err, req, res) {
+                    grunt.log.error('Proxy error: ', err.code);
+                }),
+                config: proxyOption
             });
             grunt.log.writeln('Proxy created for: ' +  proxyOption.context + ' to ' + proxyOption.host + ':' + proxyOption.port);
         }
