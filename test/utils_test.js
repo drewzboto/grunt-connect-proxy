@@ -45,25 +45,33 @@ exports.utils_test = {
     var proxyOptions = {
         host: 'foo.com',
         https: true,
+        port: 443,
         ws: false
     };
 
-    test.expect(5);
+    test.expect(6);
     test.equal(utils.getTargetUrl(proxyOptions), 'https://foo.com');
 
     proxyOptions.https = false;
+    proxyOptions.port = 80;
     test.equal(utils.getTargetUrl(proxyOptions), 'http://foo.com');
 
     proxyOptions.ws = true;
     test.equal(utils.getTargetUrl(proxyOptions), 'ws://foo.com');
 
     proxyOptions.https = true;
+    proxyOptions.port = 443
     test.equal(utils.getTargetUrl(proxyOptions), 'wss://foo.com');
 
     proxyOptions.port = 8080;
     proxyOptions.ws = false;
     proxyOptions.https = false;
     test.equal(utils.getTargetUrl(proxyOptions), 'http://foo.com:8080');
+
+    proxyOptions.port = 445;
+    proxyOptions.ws = false;
+    proxyOptions.https = true;
+    test.equal(utils.getTargetUrl(proxyOptions), 'https://foo.com:445');
 
     test.done();
   }
