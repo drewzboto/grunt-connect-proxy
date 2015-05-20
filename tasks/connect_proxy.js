@@ -8,6 +8,8 @@
 
 'use strict';
 var utils = require('../lib/utils');
+var https = require('https');
+var http = require('http');
 var _ = require('lodash');
 
 module.exports = function(grunt) {
@@ -56,7 +58,8 @@ module.exports = function(grunt) {
                     xfwd: proxyOption.xforward,
                     headers: {
                         host: proxyOption.host
-                    }
+                    },
+                    agent: proxyOption.https ? https.globalAgent : http.globalAgent
                 }).on('error', function (err, req, res) {
                     grunt.log.error('Proxy error: ', err.code);
                 }),
