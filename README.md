@@ -151,6 +151,14 @@ The port to proxy to.
 Type: `Boolean`
 Default: false
 
+ if the proxy should target a https end point on the destination server
+
+#### options.secure
+Type: `Boolean`
+Default: true
+
+ true/false, if you want to verify the SSL Certs (Avoids: SELF_SIGNED_CERT_IN_CHAIN errors when set to false)
+
 Whether to proxy with https
 
 #### options.xforward:
