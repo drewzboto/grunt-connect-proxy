@@ -42,6 +42,7 @@ module.exports = function(grunt) {
         proxyOption = _.defaults(proxy,  {
             port: proxy.https ? 443 : 80,
             https: false,
+            secure: true,
             xforward: false,
             rules: [],
             ws: false
@@ -51,7 +52,7 @@ module.exports = function(grunt) {
             utils.registerProxy({
                 server: httpProxy.createProxyServer({
                     target: utils.getTargetUrl(proxyOption),
-                    secure: proxyOption.https,
+                    secure: proxyOption.secure,
                     xfwd: proxyOption.xforward,
                     headers: {
                         host: proxyOption.host
