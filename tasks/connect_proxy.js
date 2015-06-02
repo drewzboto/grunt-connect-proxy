@@ -47,7 +47,8 @@ module.exports = function(grunt) {
             secure: true,
             xforward: false,
             rules: [],
-            ws: false
+            ws: false,
+            headers: {}
         });
         if (validateProxyConfig(proxyOption)) {
             proxyOption.rules = utils.processRewrites(proxyOption.rewrite);
@@ -57,7 +58,7 @@ module.exports = function(grunt) {
                     secure: proxyOption.secure,
                     xfwd: proxyOption.xforward,
                     headers: {
-                        host: proxyOption.host
+                        host: proxyOption.headers.host || proxyOption.host
                     },
                     agent: proxyOption.https ? https.globalAgent : http.globalAgent
                 }).on('error', function (err, req, res) {

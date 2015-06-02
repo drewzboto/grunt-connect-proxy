@@ -54,7 +54,8 @@ module.exports = function(grunt) {
                 '^/full': '/anothercontext'
               },
               headers: {
-                "X-Proxied-Header": "added"
+                "X-Proxied-Header": "added",
+                'host': 'www.anotherhost.com'
               },
               ws: true
             },
