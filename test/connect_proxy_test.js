@@ -22,6 +22,8 @@ var grunt = require('grunt');
     test.ifError(value)
 */
 var utils = require("../lib/utils.js");
+var https = require('https');
+var http = require('http');
 
 exports.connect_proxy = {
   setUp: function(done) {
@@ -29,7 +31,7 @@ exports.connect_proxy = {
     done();
   },
   default_options: function(test) {
-    test.expect(8);
+    test.expect(10);
     var proxies = utils.proxies();
 
     test.equal(proxies.length, 5, 'should return five valid proxies');
@@ -40,11 +42,14 @@ exports.connect_proxy = {
     test.equal(proxies[0].config.https, false, 'should have default http');
     test.equal(proxies[0].config.xforward, false, 'should have default xforward');
     test.equal(proxies[0].config.ws, false, 'should have default ws to false');
+    test.equal(proxies[0].server.options.agent, http.globalAgent, 'should have agent set from http globalAgent');
+    test.equal(proxies[0].server.options.headers.host, 'www.defaults.com',
+        'should have host header set from config host');
 
     test.done();
   },
   full_options: function(test) {
-    test.expect(11);
+    test.expect(13);
     var proxies = utils.proxies();
 
     test.equal(proxies.length, 5, 'should return five valid proxies');
@@ -58,6 +63,9 @@ exports.connect_proxy = {
     test.deepEqual(proxies[1].config.rewrite, { '^/full': '/anothercontext' }, 'should have rewrite set from config');
     test.equal(proxies[1].config.rules.length, 1, 'rules array should have an item');
     test.deepEqual(proxies[1].config.rules[0], { from: new RegExp('^/full'), to: '/anothercontext'}, 'rules object should be converted to regex');
+    test.equal(proxies[1].server.options.agent, https.globalAgent, 'should have agent set from https globalAgent');
+    test.equal(proxies[1].server.options.headers.host, 'www.anotherhost.com',
+        'should have host header set from config host');
 
     test.done();
   },
