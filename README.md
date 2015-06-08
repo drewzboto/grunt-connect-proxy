@@ -134,7 +134,7 @@ Type: `String` or `Array`
 
 The context(s) to match requests against. Matching requests will be proxied. Should start with /. Should not end with /
 Multiple contexts can be matched for the same proxy rule via an array such as:
-context: ['/api', 'otherapi']
+context: ['/api', '/otherapi']
 
 #### options.host
 Type: `String`
