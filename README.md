@@ -180,7 +180,7 @@ Set to false to isolate multi-task configuration proxy options from parent level
 #### options.rewrite
 Type: `Object`
 
-Allows rewrites of url (including context) when proxying. The object's keys serve as the regex used in the replacement operation. As an example the following proxy configuration will remove the context when proxying:
+Allows rewrites of url (including context) when proxying. The object's keys serve as the regex used in the replacement operation. As an example the following proxy configuration will update the context when proxying:
 
 ```js
 proxies: [
@@ -189,7 +189,10 @@ proxies: [
     port: 8080,
     rewrite: {
         '^/removingcontext': '',
-        '^/changingcontext': '/anothercontext'
+        '^/changingcontext': '/anothercontext',
+        '^/updating(context)': function(match, p1) {
+            return '/new' + p1;
+        }
     }
 ]
 ```
