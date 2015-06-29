@@ -56,7 +56,8 @@ module.exports = function(grunt) {
                     xfwd: proxyOption.xforward,
                     headers: {
                         host: proxyOption.host
-                    }
+                    },
+                    hostRewrite: proxyOption.hostRewrite
                 }).on('error', function (err, req, res) {
                     grunt.log.error('Proxy error: ', err.code);
                 }),
