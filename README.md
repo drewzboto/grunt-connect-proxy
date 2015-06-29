@@ -199,6 +199,11 @@ Type: `Object`
 
 A map of headers to be added to proxied requests.
 
+#### options.hostRewrite
+Type: `String`
+
+Rewrites the location hostname on 30X redirects.
+
 #### options.hideHeaders
 Type: `Array`
 
