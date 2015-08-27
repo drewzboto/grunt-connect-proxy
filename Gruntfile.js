@@ -84,6 +84,15 @@ module.exports = function(grunt) {
             {
               context: ['/array1','/array2'],
               host: 'www.defaults.com'
+            },
+            {
+              context: '/rewrite',
+              host: 'www.yetanothercontext.com',
+              rewrite: {
+                '^(/)rewrite': function(match, p1) {
+                  return p1;
+                }
+              }
             }
       ],
       server2: {
