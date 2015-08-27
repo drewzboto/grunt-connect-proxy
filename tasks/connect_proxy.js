@@ -45,6 +45,7 @@ module.exports = function(grunt) {
             secure: true,
             xforward: false,
             rules: [],
+            errorHandler: function(req, res, next) {  },
             ws: false
         });
         if (validateProxyConfig(proxyOption)) {

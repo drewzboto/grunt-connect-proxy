@@ -212,6 +212,21 @@ Type: `Array`
 
 An array of headers that should be removed from the server's response.
 
+#### options.errorHandler
+Type: `Function`
+
+Another middleware that will be called if proxy request fails.
+Example:
+```js
+    errorHandler: function(req, res, next, err) {
+        if (err.code === 404) {
+            res.send('Some error page');
+        } else {
+            next();
+        }
+    }
+```
+
 #### options.ws
 Type: `Boolean`
 Default: false
