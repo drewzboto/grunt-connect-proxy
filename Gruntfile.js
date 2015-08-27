@@ -123,7 +123,7 @@ module.exports = function(grunt) {
             context: '/hideHeaders',
             host: 'localhost',
             port: 8081,
-            hideHeaders: ['x-hidden-header-1', 'x-hidden-header-2']
+            hideHeaders: ['x-hidden-header-1', 'X-HiDdEn-HeAdEr-2']
           }
         ]
       }

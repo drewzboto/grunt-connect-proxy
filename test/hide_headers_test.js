@@ -23,8 +23,9 @@ exports.connect_proxy = {
       path: '/hideHeaders',
       port: 9000
     }, function(response) {
+
       test.equal(response.headers['x-hidden-header-1'], undefined, 'hidden header should be hidden');
-      test.equal(response.headers['x-hidden-header-2'], undefined, 'hidden header should also be hidden');
+      test.equal(response.headers['x-hidden-header-2'], undefined, 'header hiding is case insensitive');
       test.done();
     }).end();
   }
