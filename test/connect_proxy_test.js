@@ -29,10 +29,10 @@ exports.connect_proxy = {
     done();
   },
   default_options: function(test) {
-    test.expect(8);
+    test.expect(9);
     var proxies = utils.proxies();
 
-    test.equal(proxies.length, 6, 'should return six valid proxies');
+    test.equal(proxies.length, 7, 'should return six valid proxies');
     test.notEqual(proxies[0].server, null, 'server should be configured');
     test.equal(proxies[0].config.context, '/defaults', 'should have context set from config');
     test.equal(proxies[0].config.host, 'www.defaults.com', 'should have host set from config');
@@ -40,6 +40,7 @@ exports.connect_proxy = {
     test.equal(proxies[0].config.https, false, 'should have default http');
     test.equal(proxies[0].config.xforward, false, 'should have default xforward');
     test.equal(proxies[0].config.ws, false, 'should have default ws to false');
+    test.equal(proxies[0].config.auth, undefined, 'should not have default for auth');
 
     test.done();
   },
@@ -47,7 +48,7 @@ exports.connect_proxy = {
     test.expect(11);
     var proxies = utils.proxies();
 
-    test.equal(proxies.length, 6, 'should return five valid proxies');
+    test.equal(proxies.length, 7, 'should return seven valid proxies');
     test.notEqual(proxies[1].server, null, 'server should be configured');
     test.equal(proxies[1].config.context, '/full', 'should have context set from config');
     test.equal(proxies[1].config.host, 'www.full.com', 'should have host set from config');
@@ -75,7 +76,7 @@ exports.connect_proxy = {
     test.expect(5);
     var proxies = utils.proxies();
 
-    test.equal(proxies.length, 6, 'should not add the 2 invalid proxies');
+    test.equal(proxies.length, 7, 'should not add the 2 invalid proxies');
     test.notEqual(proxies[0].config.context, '/missinghost', 'should not have context set from config with missing host');
     test.notEqual(proxies[0].config.host, 'www.missingcontext.com', 'should not have host set from config with missing context');
     test.notEqual(proxies[1].config.context, '/missinghost', 'should not have context set from config with missing host');
@@ -86,7 +87,7 @@ exports.connect_proxy = {
   invalid_rewrite: function(test) {
     test.expect(3);
     var proxies = utils.proxies();
-    test.equal(proxies.length, 6, 'proxies should still be valid');
+    test.equal(proxies.length, 7, 'proxies should still be valid');
     test.equal(proxies[3].config.rules.length, 1, 'rules array should have one valid item');
     test.deepEqual(proxies[3].config.rules[0], { from: new RegExp('^/in'), to: '/thisis'}, 'rules object should be converted to regex');
 
@@ -101,4 +102,13 @@ exports.connect_proxy = {
     test.equal('/rewrite'.replace(rules.from, rules.to), '/', 'should execute function when replacing');
     test.done();
   },
+
+  basic_authentication: function(test) {
+    test.expect(1);
+    var config = utils.proxies()[6].config;
+    test.equal(config.auth, 'someone:password', 'should have auth set from config');
+
+    test.done();
+  },
+
 };

@@ -93,6 +93,11 @@ module.exports = function(grunt) {
                   return p1;
                 }
               }
+            },
+            {
+              context: '/auth',
+              host: 'www.auth.com',
+              auth: 'someone:password'
             }
       ],
       server2: {

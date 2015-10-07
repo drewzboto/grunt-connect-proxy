@@ -50,16 +50,20 @@ module.exports = function(grunt) {
         });
         if (validateProxyConfig(proxyOption)) {
             proxyOption.rules = utils.processRewrites(proxyOption.rewrite);
+            var httpProxyOption = {
+                target: utils.getTargetUrl(proxyOption),
+                secure: proxyOption.secure,
+                xfwd: proxyOption.xforward,
+                headers: {
+                    host: proxyOption.host
+                },
+                hostRewrite: proxyOption.hostRewrite
+            };
+            if(proxyOption.auth) {
+                httpProxyOption.auth = proxyOption.auth;
+            }
             utils.registerProxy({
-                server: httpProxy.createProxyServer({
-                    target: utils.getTargetUrl(proxyOption),
-                    secure: proxyOption.secure,
-                    xfwd: proxyOption.xforward,
-                    headers: {
-                        host: proxyOption.host
-                    },
-                    hostRewrite: proxyOption.hostRewrite
-                }).on('error', function (err, req, res) {
+                server: httpProxy.createProxyServer(httpProxyOption).on('error', function (err, req, res) {
                     grunt.log.error('Proxy error: ', err.code);
                 }),
                 config: proxyOption
