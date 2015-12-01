@@ -147,6 +147,24 @@ Default: 80
 
 The port to proxy to.
 
+#### options.matchContext
+Type: `Function`
+Default: null
+
+Allows to specify a specific matchContext used by the proxy instance to check if the context is
+valid. It receives the request object as a parameter.
+
+``` javascript
+proxies: [{
+    context: '/',
+    host: 'www.foo.com',
+    port: 8080,
+    matchContext: function(req){
+        return req.headers.host === 'localhost'
+    }
+}];
+```
+
 #### options.https
 Type: `Boolean`
 Default: false
@@ -176,6 +194,12 @@ Type: `Boolean`
 Default: true
 
 Set to false to isolate multi-task configuration proxy options from parent level instead of appending them.
+
+#### options.keepProxiesOnConnect
+Type: `Boolean`
+Default: false
+
+Allows to keep the proxies list with the proxies configured on previous connect tasks.
 
 #### options.rewrite
 Type: `Object`

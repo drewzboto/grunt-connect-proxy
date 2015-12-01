@@ -41,6 +41,50 @@ exports.utils_test = {
     test.done();
   },
 
+  match_context_and_proxy_context_test: function(test){
+    var proxy = {
+        config: {
+            host: 'foo.com',
+            https: true,
+            port: 443,
+            ws: false
+        }
+    };
+    var req = {
+        url: '/foo/bar',
+        headers: {
+            host: 'bar.com'
+        }
+    };
+
+    var match;
+
+    test.expect(5);
+
+    proxy.config.context = '/';
+    match = utils.matchContextAndProxyContext(proxy, req);
+    test.equal(match, true, 'should match default match with no proxy match context set');
+
+    proxy.config.context = '/foo/';
+    match = utils.matchContextAndProxyContext(proxy, req);
+    test.equal(match, true, 'should match default match with no proxy match context set');
+
+    proxy.config.matchContext = function(req){
+        return false;
+    };
+    match = utils.matchContextAndProxyContext(proxy, req);
+    test.equal(match, false, 'should not match as the proxy match context is false');
+
+    proxy.config.matchContext = function(contextReq){
+        test.deepEqual(req, contextReq, 'the context match req should be equal to the one above');
+        return true;
+    };
+    match = utils.matchContextAndProxyContext(proxy, req);
+    test.equal(match, true, 'should match as the proxy match context is true');
+
+    test.done();
+  },
+
   get_target_url_test: function(test){
     var proxyOptions = {
         host: 'foo.com',

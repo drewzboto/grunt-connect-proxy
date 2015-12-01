@@ -15,6 +15,7 @@ module.exports = function(grunt) {
     // setup proxy
     var httpProxy = require('http-proxy');
     var proxyOption;
+    var connectOptions;
     var proxyOptions = [];
     var validateProxyConfig = function(proxyOption) {
         if (_.isUndefined(proxyOption.host) || _.isUndefined(proxyOption.context)) {
@@ -27,10 +28,9 @@ module.exports = function(grunt) {
         return true;
     };
 
-    utils.reset();
     utils.log = grunt.log;
     if (config) {
-        var connectOptions = grunt.config('connect.'+config) || [];
+        connectOptions = grunt.config('connect.'+config) || [];
         if (typeof connectOptions.appendProxies === 'undefined' || connectOptions.appendProxies) {
             proxyOptions = proxyOptions.concat(grunt.config('connect.proxies') || []);
         }
@@ -38,6 +38,11 @@ module.exports = function(grunt) {
     } else {
         proxyOptions = proxyOptions.concat(grunt.config('connect.proxies') || []);
     }
+
+    if(!connectOptions || !connectOptions.keepProxiesOnConnect){
+        utils.reset();
+    }
+
     proxyOptions.forEach(function(proxy) {
         proxyOption = _.defaults(proxy,  {
             port: proxy.https ? 443 : 80,
@@ -46,7 +51,8 @@ module.exports = function(grunt) {
             xforward: false,
             rules: [],
             errorHandler: function(req, res, next) {  },
-            ws: false
+            ws: false,
+            matchContext: null
         });
         if (validateProxyConfig(proxyOption)) {
             proxyOption.rules = utils.processRewrites(proxyOption.rewrite);
