@@ -59,7 +59,7 @@ exports.utils_test = {
 
     var match;
 
-    test.expect(5);
+    test.expect(6);
 
     proxy.config.context = '/';
     match = utils.matchContextAndProxyContext(proxy, req);
@@ -81,6 +81,10 @@ exports.utils_test = {
     };
     match = utils.matchContextAndProxyContext(proxy, req);
     test.equal(match, true, 'should match as the proxy match context is true');
+
+    proxy.config.context = '/bar/';
+    match = utils.matchContextAndProxyContext(proxy, req);
+    test.equal(match, false, 'should not match as context not match');
 
     test.done();
   },
