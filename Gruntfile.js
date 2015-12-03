@@ -135,6 +135,27 @@ module.exports = function(grunt) {
             hideHeaders: ['x-hidden-header-1', 'X-HiDdEn-HeAdEr-2']
           }
         ]
+      },
+      testServer1: {
+        appendProxies: false,
+        proxies: [
+          {
+            context: '/testServer1',
+            host: 'localhost',
+            port: 8080,
+          }
+        ]
+      },
+      testServer2: {
+        appendProxies: false,
+        keepProxiesOnConnect: true,
+        proxies: [
+          {
+            context: '/',
+            host: 'localhost',
+            port: 8081,
+          }
+        ]
       }
     },
 
@@ -145,7 +166,8 @@ module.exports = function(grunt) {
       server3: 'test/server3_proxy_test.js',
       utils: 'test/utils_test.js',
       request: 'test/request_test.js',
-      hideHeaders: 'test/hide_headers_test.js'
+      hideHeaders: 'test/hide_headers_test.js',
+      keepProxiesOnConnect: 'test/keep_proxies_on_connect.js'
     }
 
   });
@@ -173,8 +195,15 @@ module.exports = function(grunt) {
     'configureProxies:request',
     'connect:request',
     'nodeunit:request',
-    'nodeunit:hideHeaders'
-    ]);
+    'nodeunit:hideHeaders',
+    'test-keepProxiesOnConnect'
+  ]);
+
+  grunt.registerTask('test-keepProxiesOnConnect', [
+    'configureProxies:testServer1',
+    'configureProxies:testServer2',
+    'nodeunit:keepProxiesOnConnect'
+  ]);
 
   // specifically test that option inheritance works for multi-level config
   grunt.registerTask('test-inheritance', [
