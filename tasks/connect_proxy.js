@@ -53,6 +53,7 @@ module.exports = function(grunt) {
             utils.registerProxy({
                 server: httpProxy.createProxyServer({
                     target: utils.getTargetUrl(proxyOption),
+                    auth: proxyOption.auth,
                     secure: proxyOption.secure,
                     xfwd: proxyOption.xforward,
                     headers: {
