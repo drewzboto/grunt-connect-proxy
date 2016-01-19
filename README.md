@@ -89,7 +89,7 @@ that `connect.static` and `connect.index` are no longer available. So, if you ru
 into an error like `connect.static is not a function`, you might be using connect 3.x.
 
 To fix this problem, load [`serve-static`](https://www.npmjs.com/package/serve-static) and/or
-[`serve-index`](https://www.npmjs.com/package/serve-index) an configure the connect task as
+[`serve-index`](https://www.npmjs.com/package/serve-index) and configure the connect task as
 follows.
 
 ```js
