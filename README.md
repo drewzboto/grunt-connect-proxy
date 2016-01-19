@@ -51,7 +51,7 @@ grunt.initConfig({
 ```
 #### Adding the middleware
 
-##### With Livereload
+##### With Livereload and grunt-contrib-connect <= 0.10
 
 Add the middleware call from the connect option middleware hook
 ```js
@@ -81,6 +81,52 @@ Add the middleware call from the connect option middleware hook
             }
         }
 ```
+
+##### With Livereload and grunt-contrib-connect >= 0.11
+
+grunt-contrib-connect 0.11 onwards is using connect 3.x under the hood. This means
+that `connect.static` and `connect.index` are no longer available. So, if you run
+into an error like `connect.static is not a function`, you might be using connect 3.x.
+
+To fix this problem, load [`serve-static`](https://www.npmjs.com/package/serve-static) and/or
+[`serve-index`](https://www.npmjs.com/package/serve-index) and configure the connect task as
+follows.
+
+```js
+
+    var serveStatic = require('serve-static');
+    var serveIndex = require('serve-index');
+
+    grunt.initConfig({
+        //...
+        connect: {
+            livereload: {
+                options: {
+                    middleware: function (connect, options) {
+                        if (!Array.isArray(options.base)) {
+                            options.base = [options.base];
+                        }
+
+                        // Setup the proxy
+                        var middlewares = [require('grunt-connect-proxy/lib/utils').proxyRequest];
+
+                        // Serve static files.
+                        options.base.forEach(function(base) {
+                            middlewares.push(serveStatic(base));
+                        });
+
+                        // Make directory browse-able.
+                        var directory = options.directory || options.base[options.base.length - 1];
+                        middlewares.push(serveIndex(directory));
+
+                        return middlewares;
+                    }
+                }
+            }
+        }
+    });
+```
+
 
 ##### Without Livereload
 
