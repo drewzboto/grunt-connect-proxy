@@ -58,7 +58,9 @@ module.exports = function(grunt) {
                     headers: {
                         host: proxyOption.host
                     },
-                    hostRewrite: proxyOption.hostRewrite
+                    hostRewrite: proxyOption.hostRewrite,
+                    protocolRewrite: proxyOption.protocolRewrite,
+                    autoRewrite: proxyOption.autoRewrite
                 }).on('error', function (err, req, res) {
                     grunt.log.error('Proxy error: ', err.code);
                 }),
