@@ -60,7 +60,7 @@ exports.utils_test = {
     test.equal(utils.getTargetUrl(proxyOptions), 'ws://foo.com');
 
     proxyOptions.https = true;
-    proxyOptions.port = 443
+    proxyOptions.port = 443;
     test.equal(utils.getTargetUrl(proxyOptions), 'wss://foo.com');
 
     proxyOptions.port = 8080;
@@ -73,6 +73,26 @@ exports.utils_test = {
     proxyOptions.https = true;
     test.equal(utils.getTargetUrl(proxyOptions), 'https://foo.com:445');
 
+    test.done();
+  },
+  
+  add_headers_test: function(test){
+    var testConfig = {
+        headers: {
+            header1: 'foo',
+            header2: 'bar'
+        }
+    };
+    var testReq = {
+        headers: { }
+    };
+    
+    test.expect(2);
+    
+    utils.addHeaders(testConfig, testReq);
+    test.equal(testReq.headers.header1, 'foo');
+    test.equal(testReq.headers.header2, 'bar');
+    
     test.done();
   }
 };
