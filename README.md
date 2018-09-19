@@ -184,14 +184,16 @@ Allows rewrites of url (including context) when proxying. The object's keys serv
 
 ```js
 proxies: [
-    context: '/context',
-    host: 'host',
-    port: 8080,
-    rewrite: {
-        '^/removingcontext': '',
-        '^/changingcontext': '/anothercontext',
-        '^/updating(context)': function(match, p1) {
-            return '/new' + p1;
+    {
+        context: '/context',
+        host: 'host',
+        port: 8080,
+        rewrite: {
+            '^/removingcontext': '',
+            '^/changingcontext': '/anothercontext',
+            '^/updating(context)': function(match, p1) {
+                return '/new' + p1;
+            }
         }
     }
 ]
